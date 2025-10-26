@@ -1,3 +1,5 @@
 .vagrant/
 target/
 .idea/
+vagrant/windowsAndMacIntel/Docker-files/
+vagrant/windowsAndMacIntel/compose.yml

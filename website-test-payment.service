@@ -1,0 +1,13 @@
+[Unit]
+Description=Website Payment Test Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/test/WebsiteTest-payment.sh 
+Restart=on-failure
+User=ubuntu
+WorkingDirectory=/opt/test
+
+[Install]
+WantedBy=multi-user.target

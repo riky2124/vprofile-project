@@ -1,0 +1,13 @@
+[Unit]
+Description=CPU Load Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/generate_multi_logs.sh
+Restart=always
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

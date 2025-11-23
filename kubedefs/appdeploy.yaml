@@ -25,10 +25,10 @@ spec:
               name: app-port
           resources:
             requests:
-              memory: "512Mi"
+              memory: "1Gi"
               cpu: "250m"
             limits:
-              memory: "1Gi"
+              memory: "2Gi"
               cpu: "500m"
       # check dependencies(db, rabbitmq & memcache) before starting the application
       initContainers:

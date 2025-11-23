@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vprofile-mc-deploy
+  labels:
+    project: vprofile
+    app: vprofile-mc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: vprofile
+      app: vprofile-mc
+  template:
+    metadata:
+      labels:
+        project: vprofile
+        app: vprofile-mc
+    spec:
+      containers:
+        - name: vprofile-mc
+          image: memcached
+          ports:
+            - containerPort: 11211
+              name: vprofile-mc-port
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"

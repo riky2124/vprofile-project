@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # same name used in the application properties file to connect to the memcache service
+  name: vprocache01
+  labels:
+    project: vprofile
+    app: vprofile-mc
+spec:
+  selector:
+    project: vprofile
+    app: vprofile-mc
+  ports:
+    - protocol: TCP
+      port: 11211
+      targetPort: vprofile-mc-port
+  type: ClusterIP

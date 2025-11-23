@@ -14,8 +14,8 @@ spec:
     - host: vprofile.tr0jan.xyz
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: /(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: vprofile-app-service

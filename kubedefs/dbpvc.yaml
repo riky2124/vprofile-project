@@ -11,4 +11,5 @@ spec:
   resources:
     requests:
       storage: 3Gi
+  # change the storage class name to hostpath when running in kube cluster within docker-desktop locally
   storageClassName: default

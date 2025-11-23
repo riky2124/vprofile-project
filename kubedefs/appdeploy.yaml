@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vprofile-app-deploy
+  labels:
+    project: vprofile
+    app: vprofile-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: vprofile
+      app: vprofile-app
+  template:
+    metadata:
+      labels:
+        project: vprofile
+        app: vprofile-app
+    spec:
+      containers:
+        - name: vprofile-app
+          image: w2124docker/abc-vprofile-app
+          ports:
+            - containerPort: 8080
+              name: vprofile-app-port
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+      # check dependencies(db, rabbitmq & memcache) before starting the application
+      initiContainers:
+        - name: init-vprofile-db-check
+          image: busybox:latest
+          command:
+            [
+              "sh",
+              "-c",
+              "until nslookup vprodb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for vprodb; sleep 2; done;",
+            ]
+        - name: init-vprofile-mc-check
+          image: busybox:latest
+          command:
+            [
+              "sh",
+              "-c",
+              "until nslookup vprocache01.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for vprocache01; sleep 2; done;",
+            ]
+        - name: init-vprofile-rmq-check
+          image: busybox:latest
+          command:
+            [
+              "sh",
+              "-c",
+              "until nslookup vpromq01.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for vpromq01; sleep 2; done;",
+            ]

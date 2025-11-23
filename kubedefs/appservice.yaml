@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vprofile-app-service
+  labels:
+    project: vprofile
+    app: vprofile-app
+spec:
+  selector:
+    project: vprofile
+    app: vprofile-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: vprofile-app-port
+  type: ClusterIP

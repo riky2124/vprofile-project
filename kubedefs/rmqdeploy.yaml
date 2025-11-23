@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vprofile-rmq-deploy
+  labels:
+    project: vprofile
+    app: vprofile-rmq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: vprofile
+      app: vprofile-rmq
+  template:
+    metadata:
+      labels:
+        project: vprofile
+        app: vprofile-rmq
+    spec:
+      containers:
+        - name: vprofile-rmq
+          image: rabbitmq
+          ports:
+            - containerPort: 5672
+              name: vprofile-rmq-port
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: "guest"
+            - name: RABBITMQ_DEFAULT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: vprofile-app-secret
+                  key: rmq-pass
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"

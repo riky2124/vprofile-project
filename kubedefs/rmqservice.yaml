@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # same name used in the application properties file to connect to the rabbitmq service
+  name: vpromq01
+  labels:
+    project: vprofile
+    app: vprofile-rmq
+spec:
+  selector:
+    project: vprofile
+    app: vprofile-rmq
+  ports:
+    - protocol: TCP
+      port: 5672
+      targetPort: vprofile-rmq-port
+  type: ClusterIP

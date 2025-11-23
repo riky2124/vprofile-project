@@ -22,7 +22,7 @@ spec:
           image: rabbitmq
           ports:
             - containerPort: 5672
-              name: vprofile-rmq-port
+              name: rmq-port
           env:
             - name: RABBITMQ_DEFAULT_USER
               value: "guest"

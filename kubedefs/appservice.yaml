@@ -12,5 +12,5 @@ spec:
   ports:
     - protocol: TCP
       port: 8080
-      targetPort: vprofile-app-port
+      targetPort: app-port
   type: ClusterIP

@@ -22,7 +22,7 @@ spec:
           image: memcached
           ports:
             - containerPort: 11211
-              name: vprofile-mc-port
+              name: mc-port
           resources:
             requests:
               memory: "128Mi"

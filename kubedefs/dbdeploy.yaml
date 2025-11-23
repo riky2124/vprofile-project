@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: vprofile-db
+  name: vprofile-db-deploy
   labels:
     project: vprofile
     app: vprofile-db
@@ -22,7 +22,7 @@ spec:
           image: w2124docker/abc-vprofile-db
           ports:
             - containerPort: 3306
-              name: vprofile-db-port
+              name: db-port
           env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:

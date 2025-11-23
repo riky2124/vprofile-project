@@ -22,7 +22,7 @@ spec:
           image: w2124docker/abc-vprofile-app
           ports:
             - containerPort: 8080
-              name: vprofile-app-port
+              name: app-port
           resources:
             requests:
               memory: "512Mi"
@@ -31,7 +31,7 @@ spec:
               memory: "1Gi"
               cpu: "500m"
       # check dependencies(db, rabbitmq & memcache) before starting the application
-      initiContainers:
+      initContainers:
         - name: init-vprofile-db-check
           image: busybox:latest
           command:

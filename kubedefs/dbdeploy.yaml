@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vprofile-db
+  labels:
+    project: vprofile
+    app: vprofile-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      project: vprofile
+      app: vprofile-db
+  template:
+    metadata:
+      labels:
+        project: vprofile
+        app: vprofile-db
+    spec:
+      containers:
+        - name: vprofile-db
+          image: w2124docker/abc-vprofile-db
+          ports:
+            - containerPort: 3306
+              name: vprofile-db-port
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: vprofile-app-secret
+                  key: db-pass
+          volumeMounts:
+            - name: vprofile-db-storage
+              mountPath: /var/lib/mysql
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+      # initializer container to clean up any pre-existing lost+found data in the PVC
+      # for fresh & uninterrupted start of the database
+      initContainers:
+        - name: init-for-db
+          image: busybox:latest
+          args: ["rm", "-rf", "/var/lib/mysql/lost+found"]
+          volumeMounts:
+            - name: vprofile-db-storage
+              mountPath: /var/lib/mysql
+
+      volumes:
+        - name: vprofile-db-storage
+          persistentVolumeClaim:
+            claimName: vprofile-db-pvc
